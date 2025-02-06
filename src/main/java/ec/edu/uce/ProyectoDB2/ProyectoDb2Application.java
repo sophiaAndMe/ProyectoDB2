@@ -8,10 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ProyectoDb2Application {
 
 	public static void main(String[] args) {
-		//XDDDDDD
 
-
-		SpringApplication.run(ProyectoDb2Application.class, args);
 	}
-	//Comentario 1
 }
