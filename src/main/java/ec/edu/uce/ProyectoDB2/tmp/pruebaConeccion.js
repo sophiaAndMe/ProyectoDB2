@@ -1,8 +1,8 @@
-const conexion = require('../conexiones/db');
-const Cancion = require('../models/Cancion');
+const conexion = require('../DataBase/db');
+const Cancion = require('../Modelos/Cancion');
 
 const prueba = async () => {
-  await conexion();
+  await conexion;
 
   // Insertar un documento de prueba
   const nuevaCancion = new Cancion({
