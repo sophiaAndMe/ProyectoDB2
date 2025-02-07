@@ -1,5 +1,5 @@
 const express = require('express');
-const { searchSpotify } = require('../DataBase/spotifyService');
+const { searchSpotify } = require('../services/spotifyService');
 
 const router = express.Router();
 
