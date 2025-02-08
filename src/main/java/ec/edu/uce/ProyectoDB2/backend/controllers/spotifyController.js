@@ -1,34 +1,47 @@
-const express = require('express');
-const { getSpotifyToken } = require('../services/spotifyService');
-const axios = require('axios');
+const spotifyService = require('../services/spotifyService');
+const Artist = require('../models/Artist');
+const Album = require('../models/Album');
+const Song = require('../models/Song');
 
-const router = express.Router();
+exports.searchArtists = async (req, res) => {
+  try {
+    const { query } = req.params;
+    const artists = await Artist.find({ $text: { $search: query } }).limit(10);
+    res.json(artists);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
-// Ruta para buscar un artista en Spotify
-router.get('/search', async (req, res) => {
-    const { query } = req.query;
+exports.getTopArtists = async (req, res) => {
+  try {
+    const artists = await spotifyService.getTopArtists();
+    res.json(artists);
+  } catch (error) {
+    console.error('❌ Error en getTopArtists:', error.message);
+    res.status(500).json({ success: false, message: 'Error interno del servidor' });
+  }
+};
 
-    if (!query) {
-        return res.status(400).json({ error: 'Se requiere un parámetro de búsqueda.' });
-    }
+exports.searchAlbums = async (req, res) => {
+  try {
+    const { query } = req.params;
+    const albums = await Album.find({ $text: { $search: query } }).limit(10);
+    res.json(albums);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
-    try {
-        const token = await getSpotifyToken();
+exports.searchSongs = async (req, res) => {
+  try {
+    const { query } = req.params;
+    const songs = await Song.find({ $text: { $search: query } }).limit(10);
+    res.json(songs);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
-        const response = await axios.get(`https://api.spotify.com/v1/search`, {
-            headers: { 'Authorization': `Bearer ${token}` },
-            params: {
-                q: query,
-                type: 'artist',
-                limit: 1
-            }
-        });
 
-        res.json(response.data);
-    } catch (error) {
-        console.error('Error buscando en Spotify:', error.response?.data || error.message);
-        res.status(500).json({ error: 'Error en la búsqueda de Spotify.' });
-    }
-});
 
-module.exports = router;

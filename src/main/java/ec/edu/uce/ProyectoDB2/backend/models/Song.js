@@ -9,4 +9,7 @@ const songSchema = new mongoose.Schema({
   url: { type: String, required: true } // URL de Spotify
 });
 
+// Índice para búsquedas full-text
+songSchema.index({ title: 'text' });
+
 module.exports = mongoose.model('Song', songSchema);

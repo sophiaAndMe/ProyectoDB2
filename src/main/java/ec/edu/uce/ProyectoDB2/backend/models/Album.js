@@ -8,4 +8,7 @@ const albumSchema = new mongoose.Schema({
   songs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Song' }] // Referencias a canciones
 });
 
+// Índice para búsquedas full-text
+albumSchema.index({ name: 'text' });
+
 module.exports = mongoose.model('Album', albumSchema);

@@ -67,4 +67,31 @@ const searchSpotifyArtist = async (query) => {
   }
 };
 
-module.exports = { getSpotifyToken, searchSpotifyArtist };
+const getTopArtists = async () => {
+  const token = await getSpotifyToken();
+  if (!token) return [];
+
+  try {
+    const response = await axios.get('https://api.spotify.com/v1/browse/new-releases', {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    // Extraer los artistas más populares
+    const artists = response.data.albums.items.map(album => ({
+      id: album.artists[0].id,
+      name: album.artists[0].name,
+      album: album.name,
+      image: album.images.length > 0 ? album.images[0].url : null,
+      spotifyUrl: album.external_urls.spotify
+    }));
+
+    console.log('Top artistas obtenidos:', artists);
+    return artists;
+  } catch (error) {
+    console.error('Error al obtener top artistas:', error.response ? error.response.data : error.message);
+    return [];
+  }
+};
+
+// Asegúrate de exportar `getTopArtists`
+module.exports = { getSpotifyToken, searchSpotifyArtist, getTopArtists };

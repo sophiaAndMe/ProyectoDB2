@@ -1,16 +1,9 @@
 const express = require('express');
-const { searchSpotify } = require('../services/spotifyService');
-
 const router = express.Router();
+const spotifyController = require('../controllers/spotifyController');
 
-router.get('/buscar', async (req, res) => {
-  const query = req.query.q;
-  if (!query) return res.status(400).json({ error: 'Falta el parámetro de búsqueda' });
-
-  const data = await searchSpotify(query);
-  if (!data) return res.status(500).json({ error: 'Error obteniendo datos de Spotify' });
-
-  res.json(data);
-});
+router.get('/search/artists/:query', spotifyController.searchArtists);
+router.get('/search/albums/:query', spotifyController.searchAlbums);
+router.get('/search/songs/:query', spotifyController.searchSongs);
 
 module.exports = router;

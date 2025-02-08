@@ -1,6 +1,6 @@
 // src/app.js
 const express = require('express');
-require('../DataBase/db'); // Se importa la conexión a MongoDB
+require('../backend/config/db'); // Se importa la conexión a MongoDB
 
 const app = express();
 
