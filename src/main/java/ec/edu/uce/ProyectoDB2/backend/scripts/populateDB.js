@@ -7,9 +7,7 @@ const conexion = require('../config/db');
 
 // Lista de nombres de los 200 artistas más sonados (ejemplo)
 const top200Artists = [
-  'Jombriel',
-  'Kanye West',
-  'Adele'
+  'Trippie red',
   // Agrega los nombres de los 200 artistas aquí
 ];
 
@@ -38,13 +36,15 @@ const populateDB = async () => {
         continue;
       }
 
-      // Paso 3: Crear los objetos de artista
+      // Paso 3: Crear el objeto de artista con los nuevos campos
       const artist = new Artist({
         name: artistInfo.name,
         image: artistInfo.images[0]?.url || '', // URL de la imagen del artista
-        followers: artistInfo.followers.total,
-        genres: artistInfo.genres,
-        popularity: artistInfo.popularity,
+        followers: artistInfo.followers.total, // Número de seguidores
+        genres: artistInfo.genres, // Géneros musicales
+        popularity: artistInfo.popularity, // Popularidad del artista
+        url: artistInfo.external_urls.spotify, // URL del perfil del artista en Spotify
+        albums: [] // Inicialmente vacío
       });
 
       // Paso 4: Obtener los álbumes del artista
@@ -67,7 +67,6 @@ const populateDB = async () => {
           const song = new Song({
             title: trackData.name,
             duration: trackData.duration_ms,
-            popularity: trackData.popularity || 0,
             url: trackData.external_urls.spotify,
             album: albumObj._id, // Referencia al álbum que se insertará
             artists: [artist._id], // Referencia al artista
@@ -81,9 +80,9 @@ const populateDB = async () => {
         artistAlbums.push(albumObj._id); // Asociar el álbum al artista
       }
 
-      // Insertar el artista y sus álbumes
+      // Asociar los álbumes al artista
+      artist.albums = artistAlbums;
       artistsToInsert.push(artist);
-      artist.albums = artistAlbums; // Asociar los álbumes al artista
     }
 
     // Paso 6: Insertar todos los artistas, álbumes y canciones en la base de datos
