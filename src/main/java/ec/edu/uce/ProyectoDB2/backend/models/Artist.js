@@ -11,6 +11,6 @@ const artistSchema = new mongoose.Schema({
 });
 
 // Índice para búsquedas full-text
-artistSchema.index({ name: 'text', genres: 'text' });
+artistSchema.index({ name: 'text', genres: 'text'});
 
 module.exports = mongoose.model('Artist', artistSchema);

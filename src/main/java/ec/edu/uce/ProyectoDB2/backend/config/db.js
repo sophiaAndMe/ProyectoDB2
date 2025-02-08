@@ -9,7 +9,7 @@ const connectDB = async () => {
     const conn = await mongoose.connect("mongodb+srv://adminOsorio:diego123456@spotifyproyecto.ynrks.mongodb.net/?retryWrites=true&w=majority&appName=SpotifyProyecto", {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 50000 // Tiempo de espera en milisegundos (30 segundos)
+      serverSelectionTimeoutMS: 70000 // Tiempo de espera en milisegundos (30 segundos)
     });
     console.log(`✅ Conectado a MongoDB en ${conn.connection.host}`);
   } catch (error) {

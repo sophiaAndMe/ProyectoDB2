@@ -5,21 +5,9 @@ const Song = require('../models/Song');
 const { getSpotifyToken, searchSpotifyArtist, getArtistAlbums, getAlbumTracks } = require('../services/spotifyService');
 const conexion = require('../config/db');
 
-// Lista de nombres de los 200 artistas más sonados (ejemplo)
+// MAXIMO 20 ARTISTAS
 const top200Artists = [
-  'Bad Bunny',
-  'Jombriel',
-  'Drake',
-  'Kanye West',
-  'Lil Uzi Vert',
-  'Post Malone',
-  'J. Cole',
-  'Cardi B',
-  'Migos',
-  'Future',
-  'Doja Cat',
-  'Kendrick Lamar'
-  // Agrega los nombres de los 200 artistas aquí
+    'Taylor Swift'
 ];
 
 const populateDB = async () => {
@@ -114,4 +102,3 @@ const populateDB = async () => {
 
 // Ejecutar el script
 populateDB();
-
