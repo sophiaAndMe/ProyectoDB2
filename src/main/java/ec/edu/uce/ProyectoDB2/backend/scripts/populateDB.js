@@ -7,7 +7,7 @@ const conexion = require('../config/db');
 
 // Lista de nombres de los 200 artistas más sonados (ejemplo)
 const top200Artists = [
-  'Trippie red',
+  'Travis scoot',
   // Agrega los nombres de los 200 artistas aquí
 ];
 
@@ -40,7 +40,7 @@ const populateDB = async () => {
       const artist = new Artist({
         name: artistInfo.name,
         image: artistInfo.images[0]?.url || '', // URL de la imagen del artista
-        followers: artistInfo.followers.total, // Número de seguidores
+        followers: artistInfo.followers, // Número de seguidores
         genres: artistInfo.genres, // Géneros musicales
         popularity: artistInfo.popularity, // Popularidad del artista
         url: artistInfo.external_urls.spotify, // URL del perfil del artista en Spotify

@@ -6,7 +6,7 @@ const Song = require('../models/Song');
 exports.searchArtists = async (req, res) => {
   try {
     const { query } = req.params;
-    const artists = await Artist.find({ $text: { $search: query } }).limit(10);
+    const artists = await Artist.find({ $text: { $search: query } }).limit(11);
     res.json(artists);
   } catch (error) {
     res.status(500).json({ error: error.message });
