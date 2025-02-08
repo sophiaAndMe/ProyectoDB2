@@ -53,7 +53,8 @@ const searchSpotifyArtist = async (query) => {
         genres: artist.genres,
         popularity: artist.popularity,
         followers: artist.followers.total,
-        spotifyUrl: artist.external_urls.spotify
+        images: artist.images,
+        external_urls: artist.external_urls
       };
 
       console.log('Información del artista:', artistInfo);
@@ -67,31 +68,41 @@ const searchSpotifyArtist = async (query) => {
   }
 };
 
-const getTopArtists = async () => {
+// Función para obtener álbumes de un artista
+const getArtistAlbums = async (artistId) => {
   const token = await getSpotifyToken();
-  if (!token) return [];
+  if (!token) return null;
 
   try {
-    const response = await axios.get('https://api.spotify.com/v1/browse/new-releases', {
-      headers: { Authorization: `Bearer ${token}` }
+    const albumsUrl = `https://api.spotify.com/v1/artists/${artistId}/albums`;
+    const response = await axios.get(albumsUrl, {
+      headers: { 'Authorization': 'Bearer ' + token },
+      params: { limit: 50 } // Máximo de álbumes
     });
 
-    // Extraer los artistas más populares
-    const artists = response.data.albums.items.map(album => ({
-      id: album.artists[0].id,
-      name: album.artists[0].name,
-      album: album.name,
-      image: album.images.length > 0 ? album.images[0].url : null,
-      spotifyUrl: album.external_urls.spotify
-    }));
-
-    console.log('Top artistas obtenidos:', artists);
-    return artists;
+    return response.data.items;
   } catch (error) {
-    console.error('Error al obtener top artistas:', error.response ? error.response.data : error.message);
-    return [];
+    console.error('Error al obtener álbumes:', error.response ? error.response.data : error.message);
+    return null;
   }
 };
 
-// Asegúrate de exportar `getTopArtists`
-module.exports = { getSpotifyToken, searchSpotifyArtist, getTopArtists };
+// Función para obtener canciones de un álbum
+const getAlbumTracks = async (albumId) => {
+  const token = await getSpotifyToken();
+  if (!token) return null;
+
+  try {
+    const tracksUrl = `https://api.spotify.com/v1/albums/${albumId}/tracks`;
+    const response = await axios.get(tracksUrl, {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+
+    return response.data.items;
+  } catch (error) {
+    console.error('Error al obtener canciones:', error.response ? error.response.data : error.message);
+    return null;
+  }
+};
+
+module.exports = { getSpotifyToken, searchSpotifyArtist, getArtistAlbums, getAlbumTracks };
