@@ -6,7 +6,7 @@ dotenv.config();
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect("mongodb+srv://adminOsorio:diego123456@spotifyproyecto.ynrks.mongodb.net/?retryWrites=true&w=majority&appName=SpotifyProyecto", {
+    const conn = await mongoose.connect("mongodb+srv://adminOsorio:diego123456@spotifyproyecto.ynrks.mongodb.net/ProyectoDB2?retryWrites=true&w=majority&appName=SpotifyProyecto", {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       serverSelectionTimeoutMS: 70000 // Tiempo de espera en milisegundos (30 segundos)
