@@ -7,7 +7,18 @@ const conexion = require('../config/db');
 
 // Lista de nombres de los 200 artistas más sonados (ejemplo)
 const top200Artists = [
-  'Travis scoot',
+  'Bad Bunny',
+  'Jombriel',
+  'Drake',
+  'Kanye West',
+  'Lil Uzi Vert',
+  'Post Malone',
+  'J. Cole',
+  'Cardi B',
+  'Migos',
+  'Future',
+  'Doja Cat',
+  'Kendrick Lamar'
   // Agrega los nombres de los 200 artistas aquí
 ];
 

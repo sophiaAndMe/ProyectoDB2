@@ -68,24 +68,49 @@ const searchSpotifyArtist = async (query) => {
   }
 };
 
-// Función para obtener álbumes de un artista
-const getArtistAlbums = async (artistId) => {
+const getArtistAlbums = async (artistId, artistName) => {
   const token = await getSpotifyToken();
   if (!token) return null;
 
   try {
-    const albumsUrl = `https://api.spotify.com/v1/artists/${artistId}/albums`;
-    const response = await axios.get(albumsUrl, {
+    let albumsUrl = `https://api.spotify.com/v1/artists/${artistId}/albums`;
+
+    // Intentar obtener solo los álbumes
+    let response = await axios.get(albumsUrl, {
       headers: { 'Authorization': 'Bearer ' + token },
-      params: { limit: 50 } // Máximo de álbumes
+      params: {
+        limit: 50,
+        include_groups: 'album' // 🚀 SOLO ÁLBUMES
+      }
     });
 
-    return response.data.items;
+    let albums = response.data.items;
+
+    // Si no hay álbumes, obtener los sencillos (singles)
+    if (!albums || albums.length === 0) {
+      console.log(`⚠️ No se encontraron álbumes para ${artistName}, buscando sencillos...`);
+
+      response = await axios.get(albumsUrl, {
+        headers: { 'Authorization': 'Bearer ' + token },
+        params: {
+          limit: 50,
+          include_groups: 'single' // 🔄 Si no hay álbumes, obtenemos los singles
+        }
+      });
+
+      albums = response.data.items;
+    }
+
+    return albums; // ✅ Retorna álbumes o sencillos si no hay álbumes
   } catch (error) {
-    console.error('Error al obtener álbumes:', error.response ? error.response.data : error.message);
-    return null;
+    console.error('Error al obtener álbumes/sencillos:', error.response ? error.response.data : error.message);
+    return [];
   }
 };
+
+
+
+
 
 // Función para obtener canciones de un álbum
 const getAlbumTracks = async (albumId) => {
