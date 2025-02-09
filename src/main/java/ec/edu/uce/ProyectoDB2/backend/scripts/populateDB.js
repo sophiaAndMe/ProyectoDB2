@@ -7,7 +7,7 @@ const conexion = require('../config/db');
 
 // MAXIMO 20 ARTISTAS
 const top200Artists = [
-    'Drake'
+    'Jombriel'
 ];
 
 const populateDB = async () => {

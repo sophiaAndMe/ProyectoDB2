@@ -18,10 +18,13 @@
   "homepage": "https://github.com/sophiaAndMe/ProyectoDB2#readme",
   "dependencies": {
     "axios": "^1.7.9",
+    "cheerio": "^1.0.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "genius-lyrics": "^4.4.7",
     "mongoose": "^8.10.0",
+    "puppeteer": "^24.2.0",
     "qs": "^6.14.0",
     "spotify-web-api-node": "^5.0.2"
   },
