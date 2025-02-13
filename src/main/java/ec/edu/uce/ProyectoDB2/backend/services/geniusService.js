@@ -1,6 +1,6 @@
 const { Client } = require('genius-lyrics'); // Importar correctamente
 
-const geniusClient = new Client("bPCep6LglhoC-rF9kJdwSvYVLaFHGHmcftl4DEpSfz9xO-ertFUGLKozqgEiLHGK");
+const geniusClient = new Client("YRjWT5Met9NGbYpR5gEAwt12goWFrJt-zAgEwQsYKT8fUecfPFgPdvN5tY_sTpWa");
 
 const getLyrics = async (artistName, songTitle) => {
   try {

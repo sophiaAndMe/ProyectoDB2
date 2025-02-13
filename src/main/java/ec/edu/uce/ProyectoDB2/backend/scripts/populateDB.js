@@ -7,7 +7,10 @@ const conexion = require('../config/db');
 
 // MAXIMO 20 ARTISTAS
 const top200Artists = [
-    'Jombriel'
+
+    'Christian Nodal',
+    'Vicente Fernández',
+
 ];
 
 const populateDB = async () => {
