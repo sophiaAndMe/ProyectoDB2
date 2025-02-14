@@ -8,8 +8,7 @@ const conexion = require('../config/db');
 // MAXIMO 20 ARTISTAS
 const top200Artists = [
 
-    'Christian Nodal',
-    'Vicente Fernández',
+    'Gorillaz',
 
 ];
 
